@@ -8,9 +8,8 @@ import io.reactivex.disposables.Disposable
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/20
  */
-open class RxPresenter<T : IBaseView> : IBasePresenter<T> {
+open class RxPresenter<T : IBaseView>(private var mRootView: T?) : IBasePresenter {
 
-    protected var mRootView: T? = null
     private var mCompositeDisposable: CompositeDisposable? = null
 
     private fun unSubscribe() {
@@ -26,9 +25,6 @@ open class RxPresenter<T : IBaseView> : IBasePresenter<T> {
         mCompositeDisposable!!.add(subscription)
     }
 
-    override fun attachView(view: T) {
-        this.mRootView = view
-    }
 
     override fun detachView() {
         this.mRootView = null

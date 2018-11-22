@@ -5,10 +5,7 @@ package com.benyq.benyqwanandroid.mvp
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/20
  */
-interface IBasePresenter<T : IBaseView> {
-
-
-    fun attachView(view: T)
+interface IBasePresenter{
 
     fun detachView()
 

@@ -10,6 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import com.benyq.benyqwanandroid.R
+import com.benyq.benyqwanandroid.mvp.IBasePresenter
+import com.benyq.benyqwanandroid.mvp.IBaseView
+import com.benyq.benyqwanandroid.mvp.RxPresenter
+import javax.inject.Inject
 
 /**
  *@author benyq
@@ -33,14 +37,15 @@ abstract class BaseActivity: AppCompatActivity() {
     abstract fun layoutId(): Int
 
     /**
+     * 初始化 View
+     */
+    abstract fun initView()
+
+    /**
      * 初始化数据
      */
     abstract fun initData()
 
-    /**
-     * 初始化 View
-     */
-    abstract fun initView()
 
     /**
      * 初始化状态栏
