@@ -14,4 +14,6 @@ object Constants {
 
     val PATH_CACHE = "$PATH_DATA/androidFrameDemo"
 
+    const val CODE_ZERO = 0
+
 }

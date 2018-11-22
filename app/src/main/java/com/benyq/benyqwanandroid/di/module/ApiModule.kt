@@ -2,6 +2,7 @@ package com.benyq.benyqwanandroid.di.module
 
 import android.util.Log
 import com.benyq.benyqwanandroid.BuildConfig
+import com.benyq.benyqwanandroid.Preference
 import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.app.App
 import com.benyq.benyqwanandroid.base.Constants
@@ -46,17 +47,17 @@ class ApiModule {
     @Singleton
     @Provides
     fun provideServerApi(retrofit: Retrofit): AppServiceAPi {
-        Log.i("okhttp", "无网络")
+        Log.i("okhttp", "provideServerApi")
         return retrofit.create<AppServiceAPi>(AppServiceAPi::class.java)
     }
 
     @Singleton
     @Provides
     fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient {
-
-            val loggingInterceptor = HttpLoggingInterceptor { message -> Log.i("okhttp", message) }
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            builder.addNetworkInterceptor(loggingInterceptor)
+        Log.i("okhttp", "provideOkHttpClient")
+        val loggingInterceptor = HttpLoggingInterceptor { message -> Log.i("okhttp", message) }
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        builder.addNetworkInterceptor(loggingInterceptor)
 
         val cacheFile = File(Constants.PATH_CACHE)
         val cache = Cache(cacheFile, (1024 * 1024 * 50).toLong())
@@ -81,13 +82,15 @@ class ApiModule {
 
             response
         }
-        val cookieJar = object : CookieJar{
+        val cookieJar = object : CookieJar {
             override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
-                return mutableListOf()
+                val username = Preference("user", null)
+                val token_pass = Preference("token_pass", null)
+                return mutableListOf(username, token_pass)
             }
 
             override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
-                cookies.forEach{
+                cookies.forEach {
                     Log.e("benyq", "${it.name()}--${it.value()}")
                 }
             }
@@ -103,7 +106,7 @@ class ApiModule {
         //        builder.addInterceptor(new VInterceptor());
         //        RetrofitUrlManager.getInstance().with(builder);
         //设置缓存
-        with(builder){
+        with(builder) {
             addNetworkInterceptor(cacheInterceptor)
             cache(cache)
             cookieJar(cookieJar)
@@ -119,6 +122,7 @@ class ApiModule {
     }
 
     private fun createRetrofit(builder: Retrofit.Builder, client: OkHttpClient, url: String): Retrofit {
+        Log.i("okhttp", "createRetrofit")
         return builder.baseUrl(url)
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -1,19 +1,15 @@
 package com.benyq.benyqwanandroid.ui.activity
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.param.LoginParam
 import com.benyq.benyqwanandroid.base.BaseActivity
-import com.benyq.benyqwanandroid.mvp.contract.LoginContract
-import com.benyq.benyqwanandroid.mvp.presenter.LoginPresenter
+import com.benyq.benyqwanandroid.mvp.contract.LoginActivityContract
+import com.benyq.benyqwanandroid.mvp.presenter.LoginActivityPresenter
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), LoginContract.View {
+class LoginActivity : BaseActivity(), LoginActivityContract.View {
     override fun showLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -27,10 +23,9 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     }
 
     @Inject
-    lateinit var mPresenter: LoginPresenter
+    lateinit var mPresenter: LoginActivityPresenter
 
     override fun initData() {
-        AndroidInjection.inject(this)
 
     }
 
@@ -38,7 +33,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         btnLogin.setOnClickListener {
             val userName = etUserName.text.toString()
             val password = etPassword.text.toString()
-            mPresenter.login(LoginParam(userName, password))
+            mPresenter.login(LoginParam("benyq&susan", "yezijian520"))
         }
     }
 

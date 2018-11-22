@@ -9,7 +9,7 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/21
  */
-interface LoginContract {
+interface LoginActivityContract {
 
     interface View: IBaseView{
         fun showSuccess()

@@ -1,6 +1,9 @@
 package com.benyq.benyqwanandroid.di.module
 
+import com.benyq.benyqwanandroid.mvp.contract.MainActivityContract
+import com.benyq.benyqwanandroid.ui.activity.MainActivity
 import dagger.Module
+import dagger.Provides
 
 /**
  *@author benyq
@@ -9,4 +12,9 @@ import dagger.Module
  */
 @Module
 class MainActivityModule {
+
+    @Provides
+    fun providesView(view : MainActivity): MainActivityContract.View{
+        return view
+    }
 }

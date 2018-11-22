@@ -1,6 +1,6 @@
 package com.benyq.benyqwanandroid.di.module
 
-import com.benyq.benyqwanandroid.mvp.contract.LoginContract
+import com.benyq.benyqwanandroid.mvp.contract.LoginActivityContract
 import com.benyq.benyqwanandroid.ui.activity.LoginActivity
 import dagger.Module
 import dagger.Provides
@@ -11,10 +11,10 @@ import dagger.Provides
  *@Date 2018/11/22
  */
 @Module
-class LoginModule {
+class LoginActivityModule {
 
     @Provides
-    fun providesView(view : LoginActivity): LoginContract.View{
+    fun providesView(view : LoginActivity): LoginActivityContract.View{
         return view
     }
 

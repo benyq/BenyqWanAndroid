@@ -13,6 +13,7 @@ import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.mvp.IBasePresenter
 import com.benyq.benyqwanandroid.mvp.IBaseView
 import com.benyq.benyqwanandroid.mvp.RxPresenter
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -23,6 +24,7 @@ import javax.inject.Inject
 abstract class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         initStatusBar()
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
