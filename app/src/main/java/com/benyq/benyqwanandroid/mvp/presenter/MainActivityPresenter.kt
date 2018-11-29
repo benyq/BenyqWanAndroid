@@ -1,5 +1,6 @@
 package com.benyq.benyqwanandroid.mvp.presenter
 
+import android.util.Log
 import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.api.CommonSubscriber
 import com.benyq.benyqwanandroid.api.ResponseTransformer
@@ -17,14 +18,33 @@ import javax.inject.Inject
 class MainActivityPresenter@Inject constructor(private val mRootView: MainActivityContract.View, private val api: AppServiceAPi)
     : RxPresenter<MainActivityContract.View>(mRootView), MainActivityContract.Presenter {
 
-    override fun addTodo(param: AddTodoParam) {
-        api.addTodo(param)
+    override fun logout() {
+        api.logout()
                 .compose(ResponseTransformer.rxSchedulerHelper())
                 .compose(ResponseTransformer.handleFinanceResult())
                 .doOnSubscribe {
-
+                    mRootView.showLoading()
                 }.doFinally {
+                    mRootView.showLogout()
+                    mRootView.dismissLoading()
+                }.subscribe(object : CommonSubscriber<String>(mRootView){
+                    override fun onSubscribe(d: Disposable) {
+                        addSubscribe(d)
+                    }
+                    override fun onNext(t: String) {
+                    }
 
+                })
+    }
+
+    override fun addTodo(param: AddTodoParam) {
+        api.addTodo(param.content, param.title, param.date, param.type)
+                .compose(ResponseTransformer.rxSchedulerHelper())
+                .compose(ResponseTransformer.handleFinanceResult())
+                .doOnSubscribe {
+                    mRootView.showLoading()
+                }.doFinally {
+                    mRootView.dismissLoading()
                 }.subscribe(object : CommonSubscriber<String>(mRootView){
                     override fun onSubscribe(d: Disposable) {
                         addSubscribe(d)

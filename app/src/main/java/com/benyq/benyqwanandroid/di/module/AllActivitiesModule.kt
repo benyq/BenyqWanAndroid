@@ -2,7 +2,9 @@ package com.benyq.benyqwanandroid.di.module
 
 import com.benyq.benyqwanandroid.ui.activity.MainActivity
 import com.benyq.benyqwanandroid.di.scope.ActivityScope
+import com.benyq.benyqwanandroid.ui.activity.ArticleActivity
 import com.benyq.benyqwanandroid.ui.activity.LoginActivity
+import com.benyq.benyqwanandroid.ui.activity.RegisterActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,4 +23,13 @@ abstract class AllActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [LoginActivityModule::class])
     abstract fun contributeLoginActivityInjector(): LoginActivity
+
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [RegisterActivityModule::class])
+    abstract fun contributeRegisterActivityInjector(): RegisterActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [ArticleActivityModule::class])
+    abstract fun contributeArticleActivityInjector(): ArticleActivity
 }

@@ -37,7 +37,7 @@ object ResponseTransformer {
     fun <T> handleFinanceResult(): ObservableTransformer<BaseResponse<T>, T> {   //compose判断结果
         return ObservableTransformer { upstream ->
             upstream.flatMap {
-                if (Constants.CODE_ZERO == it.errorCode && it.data != null){
+                if (Constants.CODE_ZERO == it.errorCode){
                     createData(it.data)
                 }else{
                     Observable.error{

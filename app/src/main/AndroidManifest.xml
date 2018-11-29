@@ -3,7 +3,8 @@
     package="com.benyq.benyqwanandroid">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.App"
@@ -15,14 +16,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:label="玩安卓">
+            android:label="玩安卓"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LoginActivity"></activity>
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.RegisterActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.ArticleActivity"></activity>
     </application>
 
 </manifest>

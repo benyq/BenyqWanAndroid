@@ -2,7 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/search"
-        android:title="搜索" />
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_favorite_black"
+        android:title="@string/collection" />
+
+    <item
+        android:id="@+id/action_Logout"
+        android:icon="@drawable/ic_power_settings"
+        android:title="@string/logout" />
 
 </menu>

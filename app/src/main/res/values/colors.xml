@@ -7,4 +7,9 @@
     <color name="black">#000000</color>
     <!--白色-->
     <color name="white">#ffffff</color>
+
+    <color name="title_bottom_line">#E3E3E3</color>
+
+    <color name="button_pressed">#008557</color>
+
 </resources>

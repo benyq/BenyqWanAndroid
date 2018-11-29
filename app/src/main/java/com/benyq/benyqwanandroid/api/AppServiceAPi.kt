@@ -1,7 +1,7 @@
 package com.benyq.benyqwanandroid.api
 
-import com.benyq.benyqwanandroid.api.param.AddTodoParam
-import com.benyq.benyqwanandroid.api.param.LoginParam
+import com.benyq.benyqwanandroid.api.model.BannerModel
+import com.benyq.benyqwanandroid.api.model.LoginModel
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -23,8 +23,31 @@ interface AppServiceAPi {
      */
     @FormUrlEncoded
     @POST("/user/login")
-    fun login(@Field("username")username: String, @Field("password")password: String): Observable<BaseResponse<String>>
-//    fun login(@Body param: LoginParam): Observable<BaseResponse<String>>
+    fun login(@Field("username")username: String, @Field("password")password: String): Observable<BaseResponse<LoginModel>>
+
+    /**
+     *注册
+     */
+    @FormUrlEncoded
+    @POST("/user/register")
+    fun register(@Field("username")username: String,
+                 @Field("password")password: String,
+                 @Field("repassword")rePassword: String): Observable<BaseResponse<LoginModel>>
+
+
+    /**
+     * 登出
+     */
+    @GET("/user/logout/json")
+    fun logout(): Observable<BaseResponse<String>>
+
+
+    /**
+     * 首页banner
+     */
+    @GET("/banner/json")
+    fun getBanner(): Observable<BaseResponse<List<BannerModel>>>
+
 
 
     /**
@@ -32,7 +55,15 @@ interface AppServiceAPi {
      * @param param
      * @return
      */
+    @FormUrlEncoded
     @POST("/lg/todo/add/json")
-    fun addTodo(@Body param: AddTodoParam): Observable<BaseResponse<String>>
+    fun addTodo(@Field("content")content: String,
+                @Field("title")title: String,
+                @Field("date")date: String,
+                @Field("type")type: Int): Observable<BaseResponse<String>>
+
+
+
+
 
 }

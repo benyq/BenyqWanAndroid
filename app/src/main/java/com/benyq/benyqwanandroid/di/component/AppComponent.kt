@@ -2,6 +2,7 @@ package com.benyq.benyqwanandroid.di.component
 
 import com.benyq.benyqwanandroid.app.App
 import com.benyq.benyqwanandroid.di.module.AllActivitiesModule
+import com.benyq.benyqwanandroid.di.module.AllFragmentsModule
 import com.benyq.benyqwanandroid.di.module.ApiModule
 
 import dagger.Component
@@ -19,6 +20,7 @@ import javax.inject.Singleton
     AndroidInjectionModule::class,
     AllActivitiesModule::class,
     ApiModule::class,
+    AllFragmentsModule::class,
     AndroidSupportInjectionModule::class])
 interface AppComponent{
     fun inject(app: App)

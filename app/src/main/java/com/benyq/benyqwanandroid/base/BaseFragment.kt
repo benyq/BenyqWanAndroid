@@ -1,9 +1,14 @@
 package com.benyq.benyqwanandroid.base
 
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import dagger.android.support.AndroidSupportInjection
 
 /**
  *@author benyq
@@ -22,15 +27,29 @@ abstract class BaseFragment: Fragment() {
      */
     private var hasLoadData = false
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(getLayoutId(), container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isViewPrepare = true
         initView()
+        //lazyLoadDataIfPrepared()
     }
 
+
+    //仅在FragmentPagerAdapter中调用
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser){
+            lazyLoadDataIfPrepared()
+        }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden){
             lazyLoadDataIfPrepared()
         }
     }

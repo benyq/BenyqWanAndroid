@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.LoginActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.activity.RegisterActivity">
 
-    <include layout="@layout/head_toolbar"/>
+    <include layout="@layout/common_head"/>
 
-    <EditText
-        android:id="@+id/etUserName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
 
-    <EditText
-        android:id="@+id/etPassword"
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="用户名"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/ivUsernameDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_delete"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="密码"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/ivPasswordDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_delete"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/bg_common_btn"
+        android:textSize="15sp"
+        android:text="@string/login"/>
+
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:layout_gravity="end"
+        android:layout_margin="30dp"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:text="注册账号"/>
+
 
 </LinearLayout>

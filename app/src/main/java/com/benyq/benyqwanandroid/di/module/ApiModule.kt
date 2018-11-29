@@ -4,6 +4,8 @@ import android.util.Log
 import com.benyq.benyqwanandroid.BuildConfig
 import com.benyq.benyqwanandroid.Preference
 import com.benyq.benyqwanandroid.api.AppServiceAPi
+import com.benyq.benyqwanandroid.api.interceptor.AddCookiesInterceptor
+import com.benyq.benyqwanandroid.api.interceptor.SaveCookiesInterceptor
 import com.benyq.benyqwanandroid.app.App
 import com.benyq.benyqwanandroid.base.Constants
 import com.benyq.benyqwanandroid.isNetWorkConnected
@@ -82,20 +84,6 @@ class ApiModule {
 
             response
         }
-        val cookieJar = object : CookieJar {
-            override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
-                val username = Preference("user", null)
-                val token_pass = Preference("token_pass", null)
-                return mutableListOf(username, token_pass)
-            }
-
-            override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
-                cookies.forEach {
-                    Log.e("benyq", "${it.name()}--${it.value()}")
-                }
-            }
-
-        }
         //        Interceptor authId = chain -> {
         //            Request request = chain.request();
         //            request = ParamsInfoUtils.addPostParams(request);
@@ -108,8 +96,9 @@ class ApiModule {
         //设置缓存
         with(builder) {
             addNetworkInterceptor(cacheInterceptor)
+            addInterceptor(SaveCookiesInterceptor())
+            addInterceptor(AddCookiesInterceptor())
             cache(cache)
-            cookieJar(cookieJar)
             //设置超时
             connectTimeout(60, TimeUnit.SECONDS)
             readTimeout(90, TimeUnit.SECONDS)

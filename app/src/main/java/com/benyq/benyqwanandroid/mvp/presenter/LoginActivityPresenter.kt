@@ -1,10 +1,14 @@
 package com.benyq.benyqwanandroid.mvp.presenter
 
 import android.util.Log
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.api.CommonSubscriber
 import com.benyq.benyqwanandroid.api.ResponseTransformer
+import com.benyq.benyqwanandroid.api.model.LoginModel
 import com.benyq.benyqwanandroid.api.param.LoginParam
+import com.benyq.benyqwanandroid.base.ARouterPath
+import com.benyq.benyqwanandroid.local.CacheManager
 import com.benyq.benyqwanandroid.mvp.RxPresenter
 import com.benyq.benyqwanandroid.mvp.contract.LoginActivityContract
 import io.reactivex.disposables.Disposable
@@ -24,17 +28,18 @@ class LoginActivityPresenter@Inject constructor(private val mRootView: LoginActi
                 .compose(ResponseTransformer.rxSchedulerHelper())
                 .compose(ResponseTransformer.handleFinanceResult())
                 .doOnSubscribe {
-                    Log.e("benyq", "doOnSubscribe")
+                    mRootView.showLoading()
                 }
                 .doFinally {
-                    Log.e("benyq", "doFinally")
+                    mRootView.dismissLoading()
                 }
-                .subscribe(object : CommonSubscriber<String>(mRootView){
+                .subscribe(object : CommonSubscriber<LoginModel>(mRootView){
                     override fun onSubscribe(d: Disposable) {
                         addSubscribe(d)
                     }
-                    override fun onNext(t: String) {
-
+                    override fun onNext(t: LoginModel) {
+                        CacheManager.username = param.username
+                        mRootView.showSuccess(t)
                     }
                 })
     }

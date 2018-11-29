@@ -10,13 +10,15 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/22
  */
-class MainActivityContract {
+interface MainActivityContract {
 
     interface View: IBaseView {
         fun showSuccess()
+        fun showLogout()
     }
 
     interface Presenter: IBasePresenter {
         fun addTodo(param: AddTodoParam)
+        fun logout()
     }
 }

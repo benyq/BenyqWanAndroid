@@ -16,4 +16,8 @@ object Constants {
 
     const val CODE_ZERO = 0
 
+    const val PREF_COOKIE = "PREF_COOKIE"
+
+    const val USERNAME = "USERNAME"
+
 }

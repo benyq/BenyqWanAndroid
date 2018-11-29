@@ -1,5 +1,6 @@
 package com.benyq.benyqwanandroid.mvp.contract
 
+import com.benyq.benyqwanandroid.api.model.LoginModel
 import com.benyq.benyqwanandroid.api.param.LoginParam
 import com.benyq.benyqwanandroid.mvp.IBasePresenter
 import com.benyq.benyqwanandroid.mvp.IBaseView
@@ -12,7 +13,7 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
 interface LoginActivityContract {
 
     interface View: IBaseView{
-        fun showSuccess()
+        fun showSuccess(loginModel: LoginModel)
     }
 
     interface Presenter: IBasePresenter{
