@@ -1,10 +1,7 @@
 package com.benyq.benyqwanandroid.di.module
 
-import com.benyq.benyqwanandroid.ui.activity.MainActivity
 import com.benyq.benyqwanandroid.di.scope.ActivityScope
-import com.benyq.benyqwanandroid.ui.activity.ArticleActivity
-import com.benyq.benyqwanandroid.ui.activity.LoginActivity
-import com.benyq.benyqwanandroid.ui.activity.RegisterActivity
+import com.benyq.benyqwanandroid.ui.activity.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -32,4 +29,8 @@ abstract class AllActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [ArticleActivityModule::class])
     abstract fun contributeArticleActivityInjector(): ArticleActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [FavoriteArticleActivityModule::class])
+    abstract fun contributeFavoriteArticleActivityInjector(): FavoriteArticleActivity
 }

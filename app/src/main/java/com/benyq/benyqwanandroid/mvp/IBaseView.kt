@@ -11,4 +11,6 @@ interface IBaseView {
 
     fun dismissLoading()
 
+    fun showError(t: String)
+
 }

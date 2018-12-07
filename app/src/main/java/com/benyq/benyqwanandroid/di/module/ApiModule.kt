@@ -4,8 +4,7 @@ import android.util.Log
 import com.benyq.benyqwanandroid.BuildConfig
 import com.benyq.benyqwanandroid.Preference
 import com.benyq.benyqwanandroid.api.AppServiceAPi
-import com.benyq.benyqwanandroid.api.interceptor.AddCookiesInterceptor
-import com.benyq.benyqwanandroid.api.interceptor.SaveCookiesInterceptor
+import com.benyq.benyqwanandroid.api.interceptor.*
 import com.benyq.benyqwanandroid.app.App
 import com.benyq.benyqwanandroid.base.Constants
 import com.benyq.benyqwanandroid.isNetWorkConnected
@@ -19,6 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+
+
 
 /**
  *@author benyq
@@ -56,34 +59,34 @@ class ApiModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(builder: OkHttpClient.Builder): OkHttpClient {
-        Log.i("okhttp", "provideOkHttpClient")
         val loggingInterceptor = HttpLoggingInterceptor { message -> Log.i("okhttp", message) }
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         builder.addNetworkInterceptor(loggingInterceptor)
 
         val cacheFile = File(Constants.PATH_CACHE)
         val cache = Cache(cacheFile, (1024 * 1024 * 50).toLong())
-        val cacheInterceptor = Interceptor {
-            var request = it.request()
-            if (!App.instance.applicationContext.isNetWorkConnected()) {
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build()
-                Log.i("okhttp", "无网络")
-            }
-            val response = it.proceed(request)
-            if (App.instance.applicationContext.isNetWorkConnected()) {
-                val maxAge = 60 * 5
-                // 有网络时, 缓存, 最大保存时长为300
-                response.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", "public, max-age=$maxAge")
-                        .build()
-            }
-
-            response
-        }
+//        val cacheInterceptor = Interceptor {
+//            Log.i("okzxhttp", "无网络${App.instance.applicationContext.isNetWorkConnected()}")
+//            var request = it.request()
+//            if (!App.instance.applicationContext.isNetWorkConnected()) {
+//                request = request.newBuilder()
+//                        .cacheControl(CacheControl.FORCE_CACHE)
+//                        .build()
+//                Log.i("okhttp", "无网络${App.instance.applicationContext.isNetWorkConnected()}")
+//            }
+//            val response = it.proceed(request)
+//            if (App.instance.applicationContext.isNetWorkConnected()) {
+//                val maxAge = 60 * 5
+//                // 有网络时, 缓存, 最大保存时长为300
+//                response.newBuilder()
+//                        .removeHeader("Pragma")
+//                        .removeHeader("Cache-Control")
+//                        .header("Cache-Control", "public, max-age=$maxAge")
+//                        .build()
+//            }
+//
+//            response
+//        }
         //        Interceptor authId = chain -> {
         //            Request request = chain.request();
         //            request = ParamsInfoUtils.addPostParams(request);
@@ -95,14 +98,17 @@ class ApiModule {
         //        RetrofitUrlManager.getInstance().with(builder);
         //设置缓存
         with(builder) {
-            addNetworkInterceptor(cacheInterceptor)
+            addNetworkInterceptor(CacheInterceptor())
+            addInterceptor(CacheInterceptor())
             addInterceptor(SaveCookiesInterceptor())
             addInterceptor(AddCookiesInterceptor())
+//            addNetworkInterceptor(NetCacheInterceptor())
+//            addInterceptor(OfflineCacheInterceptor())
             cache(cache)
             //设置超时
-            connectTimeout(60, TimeUnit.SECONDS)
-            readTimeout(90, TimeUnit.SECONDS)
-            writeTimeout(90, TimeUnit.SECONDS)
+            connectTimeout(5, TimeUnit.SECONDS)
+            readTimeout(5, TimeUnit.SECONDS)
+            writeTimeout(5, TimeUnit.SECONDS)
             //错误重连
             retryOnConnectionFailure(true)
             build()
@@ -111,11 +117,14 @@ class ApiModule {
     }
 
     private fun createRetrofit(builder: Retrofit.Builder, client: OkHttpClient, url: String): Retrofit {
-        Log.i("okhttp", "createRetrofit")
+        val gs = GsonBuilder()
+                .setPrettyPrinting()
+                .disableHtmlEscaping()
+                .create()
         return builder.baseUrl(url)
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gs))
                 .build()
     }
 

@@ -27,6 +27,15 @@ abstract class BaseFragment: Fragment() {
      */
     private var hasLoadData = false
 
+    lateinit var mContext: Context
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        mContext = context!!
+        super.onAttach(context)
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), container, false)
     }
@@ -35,7 +44,7 @@ abstract class BaseFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         isViewPrepare = true
         initView()
-        //lazyLoadDataIfPrepared()
+        lazyLoadDataIfPrepared()
     }
 
 

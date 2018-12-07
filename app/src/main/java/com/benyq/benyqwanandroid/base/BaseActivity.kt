@@ -25,6 +25,7 @@ abstract class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+        initTheme()
         initStatusBar()
         super.onCreate(savedInstanceState)
         setContentView(layoutId())

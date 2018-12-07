@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvBrowser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:drawableTop="@drawable/ic_browser"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color444A59"
+        android:text="在浏览器打开"/>
+
+    <TextView
+        android:id="@+id/tvRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:drawableTop="@drawable/ic_refresh"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color444A59"
+        android:text="刷新"/>
+
+
+    <TextView
+        android:id="@+id/tvLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:drawableTop="@drawable/ic_link"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color444A59"
+        android:text="复制链接"/>
+
+    <TextView
+        android:id="@+id/tvFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:drawableTop="@drawable/ic_favorite_empty"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color444A59"
+        android:text="收藏"/>
+
+    <TextView
+        android:id="@+id/tvShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:drawableTop="@drawable/ic_share"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color444A59"
+        android:text="分享"/>
+
+</LinearLayout>

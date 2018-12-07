@@ -1,9 +1,11 @@
 package com.benyq.benyqwanandroid.mvp.presenter
 
+import android.text.Html
 import android.util.Log
 import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.api.CommonSubscriber
 import com.benyq.benyqwanandroid.api.ResponseTransformer
+import com.benyq.benyqwanandroid.api.model.ArticleModel
 import com.benyq.benyqwanandroid.api.model.BannerModel
 import com.benyq.benyqwanandroid.mvp.RxPresenter
 import com.benyq.benyqwanandroid.mvp.contract.HomeFragmentContract
@@ -17,6 +19,29 @@ import javax.inject.Inject
  */
 class HomeFragmentPresenter@Inject constructor(private val mRootView: HomeFragmentContract.View, private val api: AppServiceAPi)
     :RxPresenter<HomeFragmentContract.View>(mRootView), HomeFragmentContract.Presenter {
+
+
+
+    override fun getHomeArticles(id: Int) {
+        api.getHomeArticles(id)
+                .compose(ResponseTransformer.rxSchedulerHelper())
+                .compose(ResponseTransformer.handleFinanceResult())
+                .doOnSubscribe {
+                    mRootView.showLoading()
+                }.doFinally {
+                    mRootView.dismissLoading()
+                }.subscribe(object : CommonSubscriber<ArticleModel>(mRootView){
+                    override fun onSubscribe(d: Disposable) {
+                        addSubscribe(d)
+                    }
+
+                    override fun onNext(t: ArticleModel) {
+                        mRootView.showHomeArticles(t)
+                    }
+
+                })
+
+    }
 
     override fun getBanner(){
         api.getBanner()

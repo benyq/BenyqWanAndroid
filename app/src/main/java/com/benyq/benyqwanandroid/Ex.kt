@@ -11,5 +11,10 @@ import android.net.ConnectivityManager
 
 fun Context.isNetWorkConnected(): Boolean{
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return cm.activeNetworkInfo.isConnected
+    return if (cm.activeNetworkInfo != null){
+        cm.activeNetworkInfo.isConnected
+    }else{
+        false
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.benyq.benyqwanandroid.api
 
-import com.benyq.benyqwanandroid.api.model.BannerModel
-import com.benyq.benyqwanandroid.api.model.LoginModel
+import com.benyq.benyqwanandroid.api.model.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -48,6 +47,51 @@ interface AppServiceAPi {
     @GET("/banner/json")
     fun getBanner(): Observable<BaseResponse<List<BannerModel>>>
 
+
+    /**
+     * 首页文章
+     */
+    @GET("/article/list/{id}/json")
+    fun getHomeArticles(@Path("id") id: Int): Observable<BaseResponse<ArticleModel>>
+
+    /**
+     * 收藏文章列表
+     */
+    @GET("/lg/collect/list/{id}/json")
+    fun getCollectedArticles(@Path("id") id: Int): Observable<BaseResponse<ArticleFavoriteModel>>
+
+    /**
+     * 收藏站内文章
+     */
+    @POST("/lg/collect/{id}/json")
+    fun collectArticle(@Path("id") id: Int): Observable<BaseResponse<String>>
+
+    /**
+     * 取消收藏文章1
+     */
+    @POST("/lg/uncollect_originId/{id}/json")
+    fun unCollectArticleOriginId(@Path("id") id: Int): Observable<BaseResponse<String>>
+
+    /**
+     * 取消收藏文章2,收藏页面
+     */
+    @POST("/lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    fun unCollectArticle(@Path("id") id: Int, @Field("originId") originId: Int): Observable<BaseResponse<String>>
+
+
+    /**
+     *项目分类
+     */
+    @GET("/project/tree/json")
+    fun getProjectCategory(): Observable<BaseResponse<List<ProjectCategoryModel>>>
+
+
+    /**
+     *项目列表数据
+     */
+    @GET("/project/list/{index}/json")
+    fun getProject(@Path("index") index: Int, @Query("cid") id: Int): Observable<BaseResponse<ProjectModel>>
 
 
     /**

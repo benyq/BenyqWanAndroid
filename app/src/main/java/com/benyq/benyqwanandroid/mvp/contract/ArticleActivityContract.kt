@@ -13,11 +13,14 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
 interface ArticleActivityContract {
 
     interface View: IBaseView {
-
+        fun showCollectArticleResponse()
+        fun showUnCollectResponse()
     }
 
     interface Presenter: IBasePresenter {
-
+        fun collectArticle(id: Int)
+        fun unCollectArticle(id: Int)
+        fun unCollectArticle(id: Int, originId: Int)
     }
 
 }

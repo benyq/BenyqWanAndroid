@@ -38,7 +38,11 @@ object ResponseTransformer {
         return ObservableTransformer { upstream ->
             upstream.flatMap {
                 if (Constants.CODE_ZERO == it.errorCode){
-                    createData(it.data)
+                    if (it.data == null){
+                        createData("" as T)
+                    }else {
+                        createData(it.data)
+                    }
                 }else{
                     Observable.error{
                         ApiException(it.errorCode, it.errorMsg)
@@ -47,6 +51,7 @@ object ResponseTransformer {
             }
         }
     }
+
 
 
     /**

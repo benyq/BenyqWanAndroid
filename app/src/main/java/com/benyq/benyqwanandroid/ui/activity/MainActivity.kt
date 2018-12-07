@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.Preference
@@ -76,6 +77,10 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
     override fun dismissLoading() {
     }
 
+    override fun showError(t: String) {
+        Toast.makeText(this, t, Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun layoutId() = R.layout.activity_main
 
@@ -106,6 +111,7 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.action_favorite -> {
+                    ARouter.getInstance().build(ARouterPath.pathFavoriteArticleActivity).navigation()
                 }
 
                 R.id.action_Logout -> {
@@ -137,7 +143,7 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
                 else -> false
             }
         }
-        navigation.selectedItemId = R.id.action_project
+        navigation.selectedItemId = R.id.action_home
 
 
     }

@@ -3,13 +3,14 @@ package com.benyq.benyqwanandroid.ui.fragment
 import android.util.Log
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.base.BaseFragment
+import com.benyq.benyqwanandroid.mvp.contract.NavigationFragmentContract
 
 /**
  *@author benyq
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/24
  */
-class NavigationFragment: BaseFragment() {
+class NavigationFragment: BaseFragment(), NavigationFragmentContract.View {
 
     companion object {
         fun getInstance(): NavigationFragment{
@@ -20,7 +21,6 @@ class NavigationFragment: BaseFragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        Log.e("benyq", "onHiddenChanged" + javaClass.name)
     }
 
     override fun getLayoutId() = R.layout.fragment_navigation
@@ -29,5 +29,14 @@ class NavigationFragment: BaseFragment() {
     }
 
     override fun lazyLoad() {
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun dismissLoading() {
+    }
+
+    override fun showError(t: String) {
     }
 }

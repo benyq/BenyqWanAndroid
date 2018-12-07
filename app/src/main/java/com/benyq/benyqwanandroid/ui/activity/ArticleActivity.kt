@@ -1,11 +1,16 @@
 package com.benyq.benyqwanandroid.ui.activity
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.*
+import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.base.ARouterPath
@@ -13,12 +18,21 @@ import com.benyq.benyqwanandroid.base.BaseActivity
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.mvp.contract.ArticleActivityContract
+import com.benyq.benyqwanandroid.mvp.presenter.ArticleActivityPresenter
+import com.benyq.benyqwanandroid.ui.dialog.ArticleDialog
 import kotlinx.android.synthetic.main.activity_article.*
 import kotlinx.android.synthetic.main.common_head.*
+import javax.inject.Inject
+import android.content.Context.CLIPBOARD_SERVICE
+import android.content.ClipData
+
+
+
+
 
 
 @Route(path = ARouterPath.pathArticleActivity)
-class ArticleActivity : BaseActivity(), ArticleActivityContract.View {
+class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
 
     @Autowired(name = "url")
     @JvmField var url: String = "http://wanandroid.com"
@@ -26,18 +40,75 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View {
     @Autowired(name = "title")
     @JvmField var title: String = ""
 
+    @Autowired(name = "favorite")
+    @JvmField var favorite: Boolean = false
+
+    @Autowired(name = "id")
+    @JvmField var articleId: Int = -1
+
+    @Autowired(name = "originId")
+    @JvmField var originId: Int = -1
+
+    @Inject
+    lateinit var mPresenter: ArticleActivityPresenter
+
     private lateinit var mWebView: WebView
 
     override fun layoutId() = R.layout.activity_article
 
+//    private val mArticleDialog by lazy { ArticleDialog.getInstance(favorite) }
+    private lateinit var mArticleDialog: ArticleDialog
+
+
     override fun initView() {
         ARouter.getInstance().inject(this)
-
+        mArticleDialog = ArticleDialog.getInstance(favorite)
         toolbar_back.setOnClickListener { finish() }
-
         toolbar_title.text = title
-
         toolbar_right.visibility = View.VISIBLE
+        toolbar_right.setOnClickListener {
+            if (!mArticleDialog.isVisible){
+                mArticleDialog.show(supportFragmentManager, "dialog")
+            }
+        }
+
+        mArticleDialog.addCallBack(object : ArticleDialog.Callback {
+            override fun response(id: Int) {
+                when(id){
+                    R.id.tvFavorite -> {
+                        if (favorite){
+                            if (originId != -1){
+                                mPresenter.unCollectArticle(articleId, originId)
+                            }else{
+                                mPresenter.unCollectArticle(articleId)
+                            }
+                        }else{
+                            mPresenter.collectArticle(articleId)
+                        }
+                        Toast.makeText(this@ArticleActivity, "tvFavorite", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.tvShare -> {
+                        Toast.makeText(this@ArticleActivity, "tvShare", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.tvBrowser -> {
+                        val uri = Uri.parse(url)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
+                        Toast.makeText(this@ArticleActivity, "tvBrowser", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.tvLink -> {
+                        val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val clipData = ClipData.newPlainText(null, url)
+                        cm.primaryClip = clipData
+                        Toast.makeText(this@ArticleActivity, "tvLink", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.tvRefresh -> {
+                        mWebView.loadUrl(url)
+                        Toast.makeText(this@ArticleActivity, "tvRefresh", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
 
         mWebView = WebView(this)
         val webSetting = mWebView.settings
@@ -76,7 +147,7 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                title?.let {
+                title.let {
                     if (title.isEmpty()){
                         toolbar_title.text = it
                     }
@@ -120,6 +191,20 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View {
     }
 
     override fun dismissLoading() {
+    }
+
+    override fun showUnCollectResponse() {
+        favorite = false
+        mArticleDialog.setFavoriteState(false)
+    }
+
+    override fun showError(t: String) {
+        Toast.makeText(this, t, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showCollectArticleResponse() {
+        favorite = true
+        mArticleDialog.setFavoriteState(true)
     }
 
 }

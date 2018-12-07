@@ -2,16 +2,23 @@ package com.benyq.benyqwanandroid.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
+import com.benyq.benyqwanandroid.api.model.ArticleModel
 import com.benyq.benyqwanandroid.api.model.BannerModel
 import com.benyq.benyqwanandroid.base.ARouterPath
+import com.benyq.benyqwanandroid.base.BaseAdapter
 import com.benyq.benyqwanandroid.base.BaseFragment
 import com.benyq.benyqwanandroid.mvp.contract.HomeFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.HomeFragmentPresenter
+import com.benyq.benyqwanandroid.ui.adapter.HomeArticleAdapter
 import com.bumptech.glide.Glide
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -40,14 +47,14 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
 
     private lateinit var mBanners: List<BannerModel>
 
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
+    private val mAdapter by lazy { HomeArticleAdapter(mContext) }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-    }
+
+    private var mCurPage = 1
+    private var mPageCount = 100
+    private var mLoading: Boolean = false
+
+
 
     override fun getLayoutId() = R.layout.fragment_home
 
@@ -75,22 +82,75 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
             ARouter.getInstance().build(ARouterPath.pathArticleActivity)
                     .withString("url", mBanners[it].url)
                     .withString("title", mBanners[it].title)
+                    .withInt("id", mBanners[it].id)
                     .navigation()
         }
 
-        rvArticle.layoutManager = LinearLayoutManager(activity)
+        rvArticle.run {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = mAdapter
+            itemAnimator = DefaultItemAnimator()
+            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val manager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    //向下滚动
+                    if (dy > 0){
+                        val visibleItemCount = manager.childCount
+                        val totalItemCount = manager.itemCount
+                        val pastVisibleItems = manager.findFirstVisibleItemPosition()
+                        //距还剩5个时加载
+                        if (!mLoading && (visibleItemCount + pastVisibleItems) >= totalItemCount - 5) {
+                            mLoading = true
+                            loadMoreDate()
+                        }
+                    }
+                }
+            })
+        }
+
+        mAdapter.setOnItemClickListener(object : BaseAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, position: Int) {
+                val article = mAdapter.mData[position]
+                ARouter.getInstance().build(ARouterPath.pathArticleActivity)
+                        .withString("url", article.link)
+                        .withString("title", article.title)
+                        .withInt("id", article.id)
+                        .navigation()
+            }
+        })
+
+        mAdapter.setOnItemChildClickListener(object : BaseAdapter.OnItemChildClickListener{
+            override fun onItemChildClick(view: View, position: Int) {
+                when(view.id){
+                    R.id.ivShare -> {
+                        Toast.makeText(activity, "ivShare", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.ivFavorite -> {
+                        Toast.makeText(activity, "ivFavorite", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        })
 
     }
 
     override fun lazyLoad() {
         mPresenter.getBanner()
+        mPresenter.getHomeArticles(mCurPage - 1)
     }
 
     override fun showLoading() {
-
+        Toast.makeText(activity, "开始加载$mCurPage", Toast.LENGTH_SHORT).show()
     }
 
     override fun dismissLoading() {
+        mLoading = false
+    }
+
+    override fun showError(t: String) {
+        Toast.makeText(activity, t, Toast.LENGTH_SHORT).show()
     }
 
     override fun showBanner(banners: List<BannerModel>) {
@@ -102,6 +162,25 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
             banner.setImages(banners.map { it.imagePath })
             //banner设置方法全部调用完毕时最后调用
             banner.start()
+        }
+    }
+
+    fun loadMoreDate(){
+        mPresenter.getHomeArticles(mCurPage)
+    }
+
+    override fun showHomeArticles(articleModel: ArticleModel) {
+        articleModel.run {
+            mCurPage = curPage
+            mPageCount = pageCount
+            val s = articleModel.datas.map {
+                it.copy(title = it.title.replace("&mdash;", "-"))
+            }
+            if (mCurPage == 1){
+                mAdapter.addNewData(s.toMutableList())
+            }else {
+                mAdapter.addData(s.toMutableList())
+            }
         }
     }
 }

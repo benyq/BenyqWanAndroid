@@ -22,6 +22,7 @@ abstract class CommonSubscriber<T>(private val mRootView: IBaseView): Observer<T
     override fun onError(e: Throwable) {
         when (e) {
             is ApiException -> {
+                mRootView
                 Log.e("benyq", e.message + "ApiException")
             }
             is JsonParseException -> {

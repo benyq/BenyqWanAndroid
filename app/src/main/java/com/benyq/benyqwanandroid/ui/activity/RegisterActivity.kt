@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
@@ -66,6 +67,10 @@ class RegisterActivity : BaseActivity(), RegisterActivityContract.View, View.OnC
     override fun dismissLoading() {
     }
 
+    override fun showError(t: String) {
+        Toast.makeText(this, t, Toast.LENGTH_SHORT).show()
+    }
+
     override fun initView() {
         toolbar_title.text = resources.getText(R.string.register)
         toolbar_back.setOnClickListener(this)
@@ -82,4 +87,8 @@ class RegisterActivity : BaseActivity(), RegisterActivityContract.View, View.OnC
 
     override fun layoutId() = R.layout.activity_register
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.detachView()
+    }
 }

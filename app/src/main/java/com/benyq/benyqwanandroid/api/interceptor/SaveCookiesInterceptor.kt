@@ -19,7 +19,9 @@ class SaveCookiesInterceptor: Interceptor {
                 Log.e("SaveCookiesInterceptor", it)
                 cookies.add(it)
             }
-            CacheManager.cookies_pref = cookies
+            if (cookies.size > 1){
+                CacheManager.cookies_pref = cookies
+            }
         }
         return originalResponse
 

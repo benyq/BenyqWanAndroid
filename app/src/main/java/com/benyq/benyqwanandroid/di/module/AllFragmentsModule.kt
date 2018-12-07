@@ -2,6 +2,9 @@ package com.benyq.benyqwanandroid.di.module
 
 import com.benyq.benyqwanandroid.di.scope.FragmentScope
 import com.benyq.benyqwanandroid.ui.fragment.HomeFragment
+import com.benyq.benyqwanandroid.ui.fragment.NavigationFragment
+import com.benyq.benyqwanandroid.ui.fragment.ProjectDetailFragment
+import com.benyq.benyqwanandroid.ui.fragment.ProjectFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -17,4 +20,17 @@ abstract class AllFragmentsModule {
     @ContributesAndroidInjector(modules = [HomeFragmentModule::class])
     abstract fun contributeHomeFragmentInjector(): HomeFragment
 
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ProjectFragmentModule::class])
+    abstract fun contributeProjectFragmentInjector(): ProjectFragment
+
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [ProjectDetailFragmentModule::class])
+    abstract fun contributeProjectDetailFragmentInjector(): ProjectDetailFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [NavigationFragmentModule::class])
+    abstract fun contributeNavigationFragmentInjector(): NavigationFragment
 }

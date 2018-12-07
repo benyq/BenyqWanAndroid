@@ -1,4 +1,5 @@
 package com.benyq.benyqwanandroid.api.interceptor
+import android.util.Log
 import com.benyq.benyqwanandroid.local.CacheManager
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -14,6 +15,7 @@ class AddCookiesInterceptor: Interceptor {
         val cookies = CacheManager.cookies_pref
         cookies.forEach {
             builder.addHeader("Cookie", it)
+            Log.e("AddCookiesInterceptor", it)
         }
         return chain.proceed(builder.build())
     }

@@ -22,10 +22,11 @@ import com.bumptech.glide.Glide
  *@e-mail 1520063035@qq.com
  *@Date 2018/11/29
  */
-class BaseHolder(private val mContext: Context, baseView: View): RecyclerView.ViewHolder(baseView) {
+open class BaseHolder(private val mContext: Context, baseView: View): RecyclerView.ViewHolder(baseView) {
 
     private val mViews = SparseArray<View>()
     private val mLayoutId: Int = 0
+    val listenerIds = mutableSetOf<Int>()
 
     fun <V : View> getView(viewId: Int): V {
         val view = mViews.get(viewId) ?: itemView.findViewById(viewId)
@@ -36,6 +37,14 @@ class BaseHolder(private val mContext: Context, baseView: View): RecyclerView.Vi
     fun setText(@IdRes viewId: Int, text: String): BaseHolder{
         val view: TextView = getView(viewId)
         view.text = text
+        return this
+    }
+
+    fun addOnItemChildClickListener(@IdRes viewId: Int, listener: BaseAdapter.OnItemChildClickListener?): BaseHolder{
+        val view: View = getView(viewId)
+        view.setOnClickListener{
+            listener?.onItemChildClick(view, layoutPosition)
+        }
         return this
     }
 

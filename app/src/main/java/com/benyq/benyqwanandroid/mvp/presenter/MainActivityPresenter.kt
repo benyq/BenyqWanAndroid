@@ -32,6 +32,7 @@ class MainActivityPresenter@Inject constructor(private val mRootView: MainActivi
                         addSubscribe(d)
                     }
                     override fun onNext(t: String) {
+                        Log.e("benyq", "我疯了$t")
                     }
 
                 })

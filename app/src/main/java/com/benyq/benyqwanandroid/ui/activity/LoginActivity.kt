@@ -2,6 +2,7 @@ package com.benyq.benyqwanandroid.ui.activity
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
@@ -48,6 +49,10 @@ class LoginActivity : BaseActivity(), LoginActivityContract.View, View.OnClickLi
     }
 
     override fun dismissLoading() {
+    }
+
+    override fun showError(t: String) {
+        Toast.makeText(this, t, Toast.LENGTH_SHORT).show()
     }
 
     override fun showSuccess(loginModel: LoginModel) {

@@ -17,4 +17,5 @@ class SearchActivity : BaseActivity() {
     override fun initTheme() {
     }
 
+
 }
