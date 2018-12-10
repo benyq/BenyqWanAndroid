@@ -1,11 +1,9 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -14,13 +12,14 @@ import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ArticleModel
 import com.benyq.benyqwanandroid.api.model.BannerModel
 import com.benyq.benyqwanandroid.base.ARouterPath
-import com.benyq.benyqwanandroid.base.BaseAdapter
+import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
 import com.benyq.benyqwanandroid.base.BaseFragment
+import com.benyq.benyqwanandroid.base.adapter.OnItemChildClickListener
+import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.contract.HomeFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.HomeFragmentPresenter
 import com.benyq.benyqwanandroid.ui.adapter.HomeArticleAdapter
 import com.bumptech.glide.Glide
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 import com.youth.banner.BannerConfig
@@ -109,7 +108,7 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
             })
         }
 
-        mAdapter.setOnItemClickListener(object : BaseAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val article = mAdapter.mData[position]
                 ARouter.getInstance().build(ARouterPath.pathArticleActivity)
@@ -120,7 +119,7 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
             }
         })
 
-        mAdapter.setOnItemChildClickListener(object : BaseAdapter.OnItemChildClickListener{
+        mAdapter.setOnItemChildClickListener(object : OnItemChildClickListener {
             override fun onItemChildClick(view: View, position: Int) {
                 when(view.id){
                     R.id.ivShare -> {

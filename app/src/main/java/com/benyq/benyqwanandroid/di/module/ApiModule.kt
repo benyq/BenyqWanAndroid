@@ -106,9 +106,9 @@ class ApiModule {
 //            addInterceptor(OfflineCacheInterceptor())
             cache(cache)
             //设置超时
-            connectTimeout(5, TimeUnit.SECONDS)
-            readTimeout(5, TimeUnit.SECONDS)
-            writeTimeout(5, TimeUnit.SECONDS)
+            connectTimeout(10, TimeUnit.SECONDS)
+            readTimeout(10, TimeUnit.SECONDS)
+            writeTimeout(10, TimeUnit.SECONDS)
             //错误重连
             retryOnConnectionFailure(true)
             build()

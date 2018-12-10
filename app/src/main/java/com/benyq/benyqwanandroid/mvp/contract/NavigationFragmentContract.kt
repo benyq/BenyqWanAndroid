@@ -1,6 +1,6 @@
 package com.benyq.benyqwanandroid.mvp.contract
 
-import com.benyq.benyqwanandroid.api.model.ProjectModel
+import com.benyq.benyqwanandroid.api.model.NavigationModel
 import com.benyq.benyqwanandroid.mvp.IBasePresenter
 import com.benyq.benyqwanandroid.mvp.IBaseView
 
@@ -13,8 +13,11 @@ interface NavigationFragmentContract {
 
 
     interface View: IBaseView {
+        fun showNavigation(data: List<NavigationModel>)
     }
 
     interface Presenter: IBasePresenter {
+
+        fun getNavigation()
     }
 }

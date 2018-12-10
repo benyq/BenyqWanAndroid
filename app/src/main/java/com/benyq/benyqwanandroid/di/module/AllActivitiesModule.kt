@@ -33,4 +33,8 @@ abstract class AllActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [FavoriteArticleActivityModule::class])
     abstract fun contributeFavoriteArticleActivityInjector(): FavoriteArticleActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [SearchActivityModule::class])
+    abstract fun contributeSearchActivityInjector(): SearchActivity
 }

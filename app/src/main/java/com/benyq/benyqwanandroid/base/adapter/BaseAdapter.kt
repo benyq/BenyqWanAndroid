@@ -1,4 +1,4 @@
-package com.benyq.benyqwanandroid.base
+package com.benyq.benyqwanandroid.base.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -13,6 +13,8 @@ import android.view.View
  *@Date 2018/11/29
  */
 abstract class BaseAdapter<T>(private val mContext: Context, private val layoutId: Int ): RecyclerView.Adapter<BaseHolder>() {
+
+    constructor(mContext: Context):this(mContext, 0x00)
 
     var mData = mutableListOf<T>()
     private var mOnItemClickListener: OnItemClickListener? = null
@@ -86,19 +88,4 @@ abstract class BaseAdapter<T>(private val mContext: Context, private val layoutI
         this.mOnItemChildLongClickListener = itemChildLongClickListener
     }
 
-    interface OnItemClickListener{
-        fun onItemClick(view: View, position: Int)
-    }
-
-    interface OnItemLongClickListener{
-        fun onItemLongClick(view: View, position: Int)
-    }
-
-    interface OnItemChildClickListener{
-        fun onItemChildClick(view: View, position: Int)
-    }
-
-    interface OnItemChildLongClickListener{
-        fun onItemChildLongClick(view: View, position: Int)
-    }
 }

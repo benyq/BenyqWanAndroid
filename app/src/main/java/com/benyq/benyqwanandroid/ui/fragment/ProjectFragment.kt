@@ -52,7 +52,7 @@ class ProjectFragment: BaseFragment(), ProjectFragmentContract.View {
 
         val projectViewPagerAdapter = ProjectViewPagerAdapter(childFragmentManager)
         projectViewPagerAdapter.setFragmentAndTitles(fragments, titles)
-        vpProject.offscreenPageLimit = data.size
+        vpProject.offscreenPageLimit = data.size + 1
         vpProject.adapter = projectViewPagerAdapter
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         tabLayout.setupWithViewPager(vpProject)

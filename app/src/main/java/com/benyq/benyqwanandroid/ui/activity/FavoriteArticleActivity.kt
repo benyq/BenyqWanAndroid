@@ -1,7 +1,6 @@
 package com.benyq.benyqwanandroid.ui.activity
 
 import android.content.Context
-import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.base.ARouterPath
@@ -13,15 +12,14 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.api.model.ArticleFavoriteModel
-import com.benyq.benyqwanandroid.base.BaseAdapter
+import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
+import com.benyq.benyqwanandroid.base.adapter.OnItemChildClickListener
+import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.presenter.FavoriteArticleActivityPresenter
-import com.benyq.benyqwanandroid.mvp.presenter.HomeFragmentPresenter
 import com.benyq.benyqwanandroid.ui.adapter.FavoriteArticleAdapter
 import kotlinx.android.synthetic.main.activity_favorite_article.*
 import kotlinx.android.synthetic.main.common_head.*
@@ -67,7 +65,7 @@ class FavoriteArticleActivity : BaseActivity(), FavoriteArticleActivityContract.
                 }
             }
         })
-        mAdapter.setOnItemClickListener(object : BaseAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val article = mAdapter.mData[position]
                 ARouter.getInstance().build(ARouterPath.pathArticleActivity)
@@ -79,7 +77,7 @@ class FavoriteArticleActivity : BaseActivity(), FavoriteArticleActivityContract.
                         .navigation()
             }
         })
-        mAdapter.setOnItemChildClickListener(object : BaseAdapter.OnItemChildClickListener{
+        mAdapter.setOnItemChildClickListener(object : OnItemChildClickListener {
             override fun onItemChildClick(view: View, position: Int) {
                 Toast.makeText(this@FavoriteArticleActivity, "ivShare", Toast.LENGTH_SHORT).show()
             }

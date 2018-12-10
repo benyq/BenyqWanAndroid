@@ -1,4 +1,4 @@
-package com.benyq.benyqwanandroid.base
+package com.benyq.benyqwanandroid.base.adapter
 
 import android.content.Context
 import android.support.annotation.IdRes
@@ -34,13 +34,13 @@ open class BaseHolder(private val mContext: Context, baseView: View): RecyclerVi
         return view as V
     }
 
-    fun setText(@IdRes viewId: Int, text: String): BaseHolder{
+    fun setText(@IdRes viewId: Int, text: String): BaseHolder {
         val view: TextView = getView(viewId)
         view.text = text
         return this
     }
 
-    fun addOnItemChildClickListener(@IdRes viewId: Int, listener: BaseAdapter.OnItemChildClickListener?): BaseHolder{
+    fun addOnItemChildClickListener(@IdRes viewId: Int, listener: OnItemChildClickListener?): BaseHolder {
         val view: View = getView(viewId)
         view.setOnClickListener{
             listener?.onItemChildClick(view, layoutPosition)

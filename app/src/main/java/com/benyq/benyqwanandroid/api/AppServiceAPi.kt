@@ -54,6 +54,13 @@ interface AppServiceAPi {
     @GET("/article/list/{id}/json")
     fun getHomeArticles(@Path("id") id: Int): Observable<BaseResponse<ArticleModel>>
 
+
+    /**
+     * 搜索热词
+     */
+    @GET("/hotkey/json")
+    fun getHotWords(): Observable<BaseResponse<List<HotWordMoedel>>>
+
     /**
      * 收藏文章列表
      */
@@ -92,6 +99,13 @@ interface AppServiceAPi {
      */
     @GET("/project/list/{index}/json")
     fun getProject(@Path("index") index: Int, @Query("cid") id: Int): Observable<BaseResponse<ProjectModel>>
+
+
+    /**
+     *项目列表数据
+     */
+    @GET("/navi/json")
+    fun getNavigation(): Observable<BaseResponse<List<NavigationModel>>>
 
 
     /**

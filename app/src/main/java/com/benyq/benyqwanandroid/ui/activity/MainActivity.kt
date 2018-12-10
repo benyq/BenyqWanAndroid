@@ -162,6 +162,9 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
                 drawerLayout.openDrawer(Gravity.START)
                 //mPresenter.addTodo(AddTodoParam("新增标题", "新增内容", "2018-11-22", 0))
             }
+            R.id.search -> {
+                ARouter.getInstance().build(ARouterPath.pathSearchActivity).navigation()
+            }
 
         }
         return true

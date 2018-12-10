@@ -9,8 +9,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ProjectModel
 import com.benyq.benyqwanandroid.base.ARouterPath
-import com.benyq.benyqwanandroid.base.BaseAdapter
+import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
 import com.benyq.benyqwanandroid.base.BaseFragment
+import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.contract.ProjectDetailFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.ProjectDetailFragmentPresenter
 import com.benyq.benyqwanandroid.ui.adapter.ProjectDetailAdapter
@@ -69,7 +70,7 @@ class ProjectDetailFragment : BaseFragment() , ProjectDetailFragmentContract.Vie
                 }
             })
         }
-        mAdapter.setOnItemClickListener(object : BaseAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 val project = mAdapter.mData[position]
                 ARouter.getInstance().build(ARouterPath.pathArticleActivity)

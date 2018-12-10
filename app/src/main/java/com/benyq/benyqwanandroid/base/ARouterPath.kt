@@ -17,4 +17,6 @@ object ARouterPath {
 
     const val pathFavoriteArticleActivity = "/nav/FavoriteArticle"
 
+    const val pathSearchActivity = "/home/Search"
+
 }

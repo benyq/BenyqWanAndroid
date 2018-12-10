@@ -3,8 +3,8 @@ package com.benyq.benyqwanandroid.ui.adapter
 import android.content.Context
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ArticleModel
-import com.benyq.benyqwanandroid.base.BaseAdapter
-import com.benyq.benyqwanandroid.base.BaseHolder
+import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
+import com.benyq.benyqwanandroid.base.adapter.BaseHolder
 
 /**
  *@author benyq
