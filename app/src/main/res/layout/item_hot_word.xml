@@ -2,18 +2,18 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_corners_navi"
+    android:background="@drawable/bg_corners_hot_word"
     android:layout_margin="5dp"
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/tvNavi"
+        android:id="@+id/tvHotWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:textSize="14sp"
-        android:textColor="@color/colorFF8C00"
+        android:textColor="@color/red"
         android:text="谷歌"/>
 
 </android.support.constraint.ConstraintLayout>

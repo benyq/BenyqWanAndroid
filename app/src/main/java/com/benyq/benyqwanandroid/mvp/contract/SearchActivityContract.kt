@@ -1,6 +1,7 @@
 package com.benyq.benyqwanandroid.mvp.contract
 
-import com.benyq.benyqwanandroid.api.model.HotWordMoedel
+import com.benyq.benyqwanandroid.api.model.HotWordModel
+import com.benyq.benyqwanandroid.api.model.QueryModel
 import com.benyq.benyqwanandroid.mvp.IBasePresenter
 import com.benyq.benyqwanandroid.mvp.IBaseView
 
@@ -12,10 +13,14 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
 interface SearchActivityContract {
 
     interface View: IBaseView{
-        fun showHotWords(data: List<HotWordMoedel>)
+        fun showHotWords(data: List<HotWordModel>)
+
+        fun showSearch(data: QueryModel)
     }
 
     interface Presenter: IBasePresenter{
         fun getHotWords()
+
+        fun searchArticle(id: Int, key: String)
     }
 }

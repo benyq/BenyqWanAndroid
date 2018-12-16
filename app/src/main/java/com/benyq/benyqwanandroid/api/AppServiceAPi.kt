@@ -59,7 +59,7 @@ interface AppServiceAPi {
      * 搜索热词
      */
     @GET("/hotkey/json")
-    fun getHotWords(): Observable<BaseResponse<List<HotWordMoedel>>>
+    fun getHotWords(): Observable<BaseResponse<List<HotWordModel>>>
 
     /**
      * 收藏文章列表
@@ -107,6 +107,13 @@ interface AppServiceAPi {
     @GET("/navi/json")
     fun getNavigation(): Observable<BaseResponse<List<NavigationModel>>>
 
+
+    /**
+     * 搜索
+     */
+    @FormUrlEncoded
+    @POST("/article/query/{id}/json")
+    fun queryArticle(@Path("id") id: Int, @Field("k") query: String): Observable<BaseResponse<QueryModel>>
 
     /**
      * 增加一条待办

@@ -5,7 +5,7 @@ package com.benyq.benyqwanandroid.api.model
  *@e-mail 1520063035@qq.com
  *@Date 2018/12/8
  */
-data class HotWordMoedel(
+data class HotWordModel(
     val id: Int,
     val link: String,
     val name: String,

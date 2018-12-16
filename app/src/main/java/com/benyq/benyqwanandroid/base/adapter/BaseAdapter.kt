@@ -70,6 +70,11 @@ abstract class BaseAdapter<T>(private val mContext: Context, private val layoutI
         notifyItemInserted(mData.size - 1)
     }
 
+    fun clearData(){
+        mData.clear()
+        notifyDataSetChanged()
+    }
+
 
     fun setOnItemClickListener(itemClickListener: OnItemClickListener){
         this.mOnItemClickListener = itemClickListener

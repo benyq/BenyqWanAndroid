@@ -3,7 +3,7 @@ package com.benyq.benyqwanandroid.mvp.presenter
 import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.api.CommonSubscriber
 import com.benyq.benyqwanandroid.api.ResponseTransformer
-import com.benyq.benyqwanandroid.api.model.HotWordMoedel
+import com.benyq.benyqwanandroid.api.model.HotWordModel
 import com.benyq.benyqwanandroid.mvp.RxPresenter
 import com.benyq.benyqwanandroid.mvp.contract.SearchActivityContract
 import io.reactivex.disposables.Disposable
@@ -16,6 +16,11 @@ import javax.inject.Inject
  */
 class SearchActivityPresenter@Inject constructor(private val mRootView: SearchActivityContract.View, private val api: AppServiceAPi)
     :RxPresenter<SearchActivityContract.View>(mRootView), SearchActivityContract.Presenter{
+
+    override fun searchArticle(id: Int, key: String) {
+
+    }
+
     override fun getHotWords() {
         api.getHotWords()
                 .compose(ResponseTransformer.rxSchedulerHelper())
@@ -24,8 +29,8 @@ class SearchActivityPresenter@Inject constructor(private val mRootView: SearchAc
                     mRootView.showLoading()
                 }.doFinally {
                     mRootView.dismissLoading()
-                }.subscribe(object : CommonSubscriber<List<HotWordMoedel>>(mRootView){
-                    override fun onNext(t: List<HotWordMoedel>) {
+                }.subscribe(object : CommonSubscriber<List<HotWordModel>>(mRootView){
+                    override fun onNext(t: List<HotWordModel>) {
                         mRootView.showHotWords(t)
                     }
 

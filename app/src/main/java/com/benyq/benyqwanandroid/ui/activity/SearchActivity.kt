@@ -1,16 +1,29 @@
 package com.benyq.benyqwanandroid.ui.activity
 
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.SearchView
+import android.text.TextUtils
+import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
-import com.benyq.benyqwanandroid.api.model.HotWordMoedel
+import com.benyq.benyqwanandroid.api.model.HotWordModel
+import com.benyq.benyqwanandroid.api.model.QueryModel
 import com.benyq.benyqwanandroid.base.ARouterPath
 import com.benyq.benyqwanandroid.base.BaseActivity
+import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.contract.SearchActivityContract
 import com.benyq.benyqwanandroid.mvp.presenter.SearchActivityPresenter
+import com.benyq.benyqwanandroid.ui.adapter.SearchHistoryAdapter
+import com.benyq.benyqwanandroid.ui.adapter.SearchHotWordsAdapter
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_search.*
 import javax.inject.Inject
 
@@ -20,11 +33,31 @@ class SearchActivity : BaseActivity(), SearchActivityContract.View {
     @Inject
     lateinit var mPresenter: SearchActivityPresenter
 
+    private val mHotWordAdapter by lazy { SearchHotWordsAdapter(this) }
+    private val mHistoryAdapter by lazy { SearchHistoryAdapter(this) }
+
     override fun layoutId() = R.layout.activity_search
 
     override fun initView() {
         toolbar.title = ""
         setSupportActionBar(toolbar)
+        rvHotWord.run {
+            val flexboxLayoutManager = FlexboxLayoutManager(context)
+            flexboxLayoutManager.flexDirection = FlexDirection.ROW
+            flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
+            flexboxLayoutManager.flexWrap = FlexWrap.WRAP
+            layoutManager = flexboxLayoutManager
+            adapter = mHotWordAdapter
+        }
+        mHotWordAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(view: View, position: Int) {
+
+            }
+        })
+
+        tvClean.setOnClickListener {
+            mHistoryAdapter.clearData()
+        }
     }
 
     override fun initData() {
@@ -35,19 +68,22 @@ class SearchActivity : BaseActivity(), SearchActivityContract.View {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_group_customer_search, menu)
-//        val searchItem = menu.findItem(R.id.action_search)
-//        val searchView = searchItem.actionView as SearchView
-//        searchView.run {
-//            setIconifiedByDefault(true)
-//            isIconified = false
-//            isSubmitButtonEnabled = true
-//        }
-        setSearchView(menu)
-        return super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_group_customer_search, AMv.menu)
+        setSearchView(AMv.menu)
+        return super.onCreateOptionsMenu(AMv.menu)
     }
 
-    override fun showHotWords(data: List<HotWordMoedel>) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return true
+    }
+
+    override fun showHotWords(data: List<HotWordModel>) {
+        mHotWordAdapter.addNewData(data.toMutableList())
     }
 
     override fun showLoading() {
@@ -57,6 +93,10 @@ class SearchActivity : BaseActivity(), SearchActivityContract.View {
     }
 
     override fun showError(t: String) {
+    }
+
+    override fun showSearch(data: QueryModel) {
+
     }
 
     private fun setSearchView(menu: Menu) {
@@ -69,41 +109,26 @@ class SearchActivity : BaseActivity(), SearchActivityContract.View {
         searchView.isSubmitButtonEnabled = true//添加提交按钮，监听在OnQueryTextListener的onQueryTextSubmit响应
         searchView.isFocusable = true//将控件设置成可获取焦点状态,默认是无法获取焦点的,只有设置成true,才能获取控件的点击事件
         searchView.requestFocusFromTouch()//模拟焦点点击事件
-        searchView.queryHint = "请输入书名或作者名      "
+        searchView.queryHint = "请输入搜索词"
         val ivSubmit: ImageView = searchView.findViewById(R.id.search_go_btn)
         //这样就可以修改图片了
         ivSubmit.setImageResource(R.drawable.ic_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextChange(query: String?): Boolean {
+                if (TextUtils.isEmpty(query)){
+                    llHotAndHistory.visibility = View.VISIBLE
+                }else {
+
+                }
                 return true
             }
 
             override fun onQueryTextSubmit(newText: String?): Boolean {
+
                 return true
             }
 
         })
-
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                tvClear.setEnabled(true);
-//                saveSearchHistory(query);
-//                mPresenter.getSearchResultList(query);
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                LogUtils.e(newText);
-//                if (newText.length() == 0){
-//                    showHistory();
-//                }else {
-//                    mPresenter.getAutoCompleteResultList(newText);
-//                }
-//                return true;
-//            }
-//        });
         item.actionView = searchView
     }
 }
