@@ -63,12 +63,6 @@ abstract class BaseSectionAdapter<K, T : SectionEntity<K>>(private val mContext:
 //        mData.add(data)
 //        notifyItemInserted(mData.size - 1)
 //    }
-
-    fun clearData(){
-        mData.clear()
-        notifyDataSetChanged()
-    }
-
     //abstract fun convert(holder: BaseHolder, position: Int, bean: K)
     abstract fun convertHead(holder: BaseHolder, position: Int, bean: T)
 }

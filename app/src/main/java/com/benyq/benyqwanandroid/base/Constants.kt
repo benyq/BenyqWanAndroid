@@ -20,4 +20,6 @@ object Constants {
 
     const val USERNAME = "USERNAME"
 
+    const val SEARCH_HISTORY = "SEARCH_HISTORY"
+
 }

@@ -4,6 +4,7 @@ import com.benyq.benyqwanandroid.api.AppServiceAPi
 import com.benyq.benyqwanandroid.api.CommonSubscriber
 import com.benyq.benyqwanandroid.api.ResponseTransformer
 import com.benyq.benyqwanandroid.api.model.HotWordModel
+import com.benyq.benyqwanandroid.api.model.QueryModel
 import com.benyq.benyqwanandroid.mvp.RxPresenter
 import com.benyq.benyqwanandroid.mvp.contract.SearchActivityContract
 import io.reactivex.disposables.Disposable
@@ -18,7 +19,23 @@ class SearchActivityPresenter@Inject constructor(private val mRootView: SearchAc
     :RxPresenter<SearchActivityContract.View>(mRootView), SearchActivityContract.Presenter{
 
     override fun searchArticle(id: Int, key: String) {
+        api.queryArticle(id, key)
+                .compose(ResponseTransformer.rxSchedulerHelper())
+                .compose(ResponseTransformer.handleFinanceResult())
+                .doOnSubscribe {
+                    mRootView.showLoading()
+                }.doFinally {
+                    mRootView.dismissLoading()
+                }.subscribe(object : CommonSubscriber<QueryModel>(mRootView){
+                    override fun onNext(t: QueryModel) {
+                        mRootView.showSearch(t)
+                    }
 
+                    override fun onSubscribe(d: Disposable) {
+                        addSubscribe(d)
+                    }
+
+                })
     }
 
     override fun getHotWords() {

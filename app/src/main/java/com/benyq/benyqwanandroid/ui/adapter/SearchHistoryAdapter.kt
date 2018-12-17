@@ -12,7 +12,7 @@ import com.benyq.benyqwanandroid.base.adapter.BaseHolder
  * @E-mail： 1520063035@qq.com
  * @description
  */
-class SearchHistoryAdapter(mContext: Context): BaseAdapter<String>(mContext, R.layout.item_search){
+class SearchHistoryAdapter(mContext: Context): BaseAdapter<String>(mContext, R.layout.item_search_history){
 
     override fun convert(holder: BaseHolder, position: Int, bean: String) {
         holder.setText(R.id.tvSearch, bean)

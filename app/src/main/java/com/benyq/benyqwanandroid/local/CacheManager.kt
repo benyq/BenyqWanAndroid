@@ -14,4 +14,6 @@ object CacheManager {
 
     var username: String by Preference(Constants.USERNAME, "")
 
+    var searchHistory: MutableList<String> by Preference(Constants.SEARCH_HISTORY, mutableListOf())
+
 }
