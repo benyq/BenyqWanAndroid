@@ -125,10 +125,52 @@ interface AppServiceAPi {
     fun addTodo(@Field("content")content: String,
                 @Field("title")title: String,
                 @Field("date")date: String,
-                @Field("type")type: Int): Observable<BaseResponse<String>>
+                @Field("type")type: Int = 0,
+                @Field("priority ")priority:Int = 0): Observable<BaseResponse<TodoModel.Todo>>
 
 
 
+    /**
+     * 更新一条待办
+     * @param param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("/lg/todo/update/{id}/json")
+    fun updateTodo(@Path("id")id: Int,
+                   @Field("content")content: String,
+                   @Field("title")title: String,
+                   @Field("date")date: String,
+                   @Field("status")status: Int,
+                   @Field("type")type: Int,
+                   @Field("priority")priority:Int): Observable<BaseResponse<TodoModel.Todo>>
 
+
+    /**
+     * 删除一条待办
+     * @param param
+     * @return
+     */
+    @GET("/lg/todo/delete/{id}/json")
+    fun deleteTodo(@Path("id")id: Int): Observable<BaseResponse<String>>
+
+
+    /**
+     * 完成一条待办
+     */
+    @FormUrlEncoded
+    @POST("/lg/todo/done/{id}/json")
+    fun updateStatusTodo(@Path("id")id: Int,
+                 @Field("status")status: Int): Observable<BaseResponse<TodoModel.Todo>>
+
+    /**
+     * todo列表
+     */
+    @GET("/lg/todo/v2/list/{id}/json")
+    fun getTodoList(@Path("id")id: Int,
+                 @Query("status")status: Int,
+                 @Query("type")type:Int,
+                 @Query("priority")priority:Int,
+                 @Query("orderby")orderby: Int): Observable<BaseResponse<TodoModel>>
 
 }

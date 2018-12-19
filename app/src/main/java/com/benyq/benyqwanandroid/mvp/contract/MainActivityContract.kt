@@ -18,7 +18,6 @@ interface MainActivityContract {
     }
 
     interface Presenter: IBasePresenter {
-        fun addTodo(param: AddTodoParam)
         fun logout()
     }
 }

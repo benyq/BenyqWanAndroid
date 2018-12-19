@@ -42,6 +42,7 @@ class ArticleDialog : DialogFragment(), View.OnClickListener {
         tvFavorite.setOnClickListener(this)
         tvRefresh.setOnClickListener(this)
         tvShare.setOnClickListener(this)
+        tvFloat.setOnClickListener(this)
         setFavoriteState(favorite)
     }
 

@@ -64,7 +64,7 @@ class ProjectDetailFragment : BaseFragment() , ProjectDetailFragmentContract.Vie
                         Log.e("benyq", "${!mLoading} && ${(visibleItemCount + pastVisibleItems) >= totalItemCount - 5}")
                         if (!mLoading && (visibleItemCount + pastVisibleItems) >= totalItemCount - 5) {
                             mLoading = true
-                            loadMoreDate()
+                            loadMoreData()
                         }
                     }
                 }
@@ -114,7 +114,7 @@ class ProjectDetailFragment : BaseFragment() , ProjectDetailFragmentContract.Vie
 
     }
 
-    private fun loadMoreDate(){
+    private fun loadMoreData(){
         mPresenter.getProject(mCurPage + 1, categoryId)
     }
 }

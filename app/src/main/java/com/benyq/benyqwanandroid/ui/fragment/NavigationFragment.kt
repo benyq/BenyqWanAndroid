@@ -1,6 +1,5 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
@@ -11,7 +10,7 @@ import com.benyq.benyqwanandroid.base.BaseFragment
 import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.contract.NavigationFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.NavigationFragmentPresenter
-import com.benyq.benyqwanandroid.ui.adapter.NaviSectionEntity
+import com.benyq.benyqwanandroid.ui.entitiy.NaviSectionEntity
 import com.benyq.benyqwanandroid.ui.adapter.NavigationAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import kotlinx.android.synthetic.main.fragment_navigation.*

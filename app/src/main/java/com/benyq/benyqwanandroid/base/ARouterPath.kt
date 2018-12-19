@@ -17,6 +17,12 @@ object ARouterPath {
 
     const val pathFavoriteArticleActivity = "/nav/FavoriteArticle"
 
+    const val pathCommonWebViewActivity = "/nav/CommonWebView"
+
+    const val pathTodoActivity = "/nav/Todo"
+
+    const val pathAboutActivity = "/nav/About"
+
     const val pathSearchActivity = "/home/Search"
 
 }

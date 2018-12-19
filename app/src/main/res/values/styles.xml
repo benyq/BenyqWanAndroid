@@ -19,9 +19,23 @@
         <item name="android:windowAnimationStyle">@style/BottomToTopAnim</item>
     </style>
 
+
     <style name="BottomToTopAnim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/dialog_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/dialog_bottom_out</item>
+    </style>
+
+    <style name="style_dialog_todo" parent="style_dialog">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/RightToLeftAnim</item>
+    </style>
+
+    <style name="RightToLeftAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_right_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_right_out</item>
     </style>
 
 
@@ -32,4 +46,8 @@
         <item name="android:textColorSecondary">@color/white</item>
     </style>
 
+
+    <style name="DatePicker" parent="AppTheme">
+        <item name="android:textSize">40sp</item>
+    </style>
 </resources>

@@ -1,70 +1,76 @@
 package com.benyq.benyqwanandroid.ui.activity
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
+import android.graphics.PixelFormat
+import android.graphics.Point
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
+import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
+import android.view.*
 import android.webkit.*
+import android.widget.Button
 import android.widget.Toast
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.base.ARouterPath
 import com.benyq.benyqwanandroid.base.BaseActivity
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.mvp.contract.ArticleActivityContract
 import com.benyq.benyqwanandroid.mvp.presenter.ArticleActivityPresenter
 import com.benyq.benyqwanandroid.ui.dialog.ArticleDialog
 import kotlinx.android.synthetic.main.activity_article.*
 import kotlinx.android.synthetic.main.common_head.*
 import javax.inject.Inject
-import android.content.Context.CLIPBOARD_SERVICE
-import android.content.ClipData
-
-
-
-
 
 
 @Route(path = ARouterPath.pathArticleActivity)
 class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
 
     @Autowired(name = "url")
-    @JvmField var url: String = "http://wanandroid.com"
+    @JvmField var mUrl: String = "http://wanandroid.com"
 
     @Autowired(name = "title")
-    @JvmField var title: String = ""
+    @JvmField var mTitle: String = ""
 
     @Autowired(name = "favorite")
-    @JvmField var favorite: Boolean = false
+    @JvmField var mFavorite: Boolean = false
 
     @Autowired(name = "id")
-    @JvmField var articleId: Int = -1
+    @JvmField var mArticleId: Int = -1
 
     @Autowired(name = "originId")
-    @JvmField var originId: Int = -1
+    @JvmField var mOriginId: Int = -1
 
     @Inject
     lateinit var mPresenter: ArticleActivityPresenter
 
     private lateinit var mWebView: WebView
 
+    val mWindowManager by lazy { getSystemService(WINDOW_SERVICE) as WindowManager }
+
+    private val mLayoutParams by lazy { WindowManager.LayoutParams() }
+
     override fun layoutId() = R.layout.activity_article
+
+    private val OVERLAY_PERMISSION_REQ_CODE = 1
 
 //    private val mArticleDialog by lazy { ArticleDialog.getInstance(favorite) }
     private lateinit var mArticleDialog: ArticleDialog
 
+    private val mFloatButton by lazy { Button(this) }
 
     override fun initView() {
         ARouter.getInstance().inject(this)
-        mArticleDialog = ArticleDialog.getInstance(favorite)
+        mArticleDialog = ArticleDialog.getInstance(mFavorite)
         toolbar_back.setOnClickListener { finish() }
-        toolbar_title.text = title
+        toolbar_title.text = mTitle
         toolbar_right.visibility = View.VISIBLE
         toolbar_right.setOnClickListener {
             if (!mArticleDialog.isVisible){
@@ -76,14 +82,14 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
             override fun response(id: Int) {
                 when(id){
                     R.id.tvFavorite -> {
-                        if (favorite){
-                            if (originId != -1){
-                                mPresenter.unCollectArticle(articleId, originId)
+                        if (mFavorite){
+                            if (mOriginId != -1){
+                                mPresenter.unCollectArticle(mArticleId, mOriginId)
                             }else{
-                                mPresenter.unCollectArticle(articleId)
+                                mPresenter.unCollectArticle(mArticleId)
                             }
                         }else{
-                            mPresenter.collectArticle(articleId)
+                            mPresenter.collectArticle(mArticleId)
                         }
                         Toast.makeText(this@ArticleActivity, "tvFavorite", Toast.LENGTH_SHORT).show()
                     }
@@ -91,20 +97,26 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
                         Toast.makeText(this@ArticleActivity, "tvShare", Toast.LENGTH_SHORT).show()
                     }
                     R.id.tvBrowser -> {
-                        val uri = Uri.parse(url)
+                        val uri = Uri.parse(mUrl)
                         val intent = Intent(Intent.ACTION_VIEW, uri)
                         startActivity(intent)
                         Toast.makeText(this@ArticleActivity, "tvBrowser", Toast.LENGTH_SHORT).show()
                     }
                     R.id.tvLink -> {
                         val cm = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                        val clipData = ClipData.newPlainText(null, url)
+                        val clipData = ClipData.newPlainText(null, mUrl)
                         cm.primaryClip = clipData
                         Toast.makeText(this@ArticleActivity, "tvLink", Toast.LENGTH_SHORT).show()
                     }
                     R.id.tvRefresh -> {
-                        mWebView.loadUrl(url)
+                        mWebView.loadUrl(mUrl)
                         Toast.makeText(this@ArticleActivity, "tvRefresh", Toast.LENGTH_SHORT).show()
+                    }
+
+                    R.id.tvFloat -> {
+                        if (requestDrawOverLays()){
+                            showFloatButton()
+                        }
                     }
                 }
             }
@@ -123,7 +135,7 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
         webSetting.loadWithOverviewMode = true
         webSetting.setGeolocationEnabled(true)
         webSetting.domStorageEnabled = true//false导致js不能转跳
-        webSetting.pluginState = WebSettings.PluginState.ON
+//        webSetting.pluginState = WebSettings.PluginState.ON
         mWebView.requestFocus()
         webSetting.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         mWebView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
@@ -132,11 +144,11 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
         }
         mWebView.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                if (url.startsWith("http") || url.startsWith("https")){
-                    mWebView.loadUrl(url)
+                if (mUrl.startsWith("http") || mUrl.startsWith("https")){
+                    mWebView.loadUrl(mUrl)
                 }else {
                     try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mUrl))
                         startActivity(intent)
                     }catch (e: Exception){
                         return true
@@ -147,8 +159,8 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                title.let {
-                    if (title.isEmpty()){
+                mTitle.let {
+                    if (!TextUtils.isEmpty(mTitle)){
                         toolbar_title.text = it
                     }
                 }
@@ -158,16 +170,23 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
             override fun onReceivedTitle(view: WebView?, title: String?) {
                 super.onReceivedTitle(view, title)
                 title?.let {
-                    if (title.isEmpty()){
-                        toolbar_title.text = it
-                    }
+                    toolbar_title.text = it
                 }
             }
         }
 
         flContainer.addView(mWebView)
-        mWebView.loadUrl(url)
+        mWebView.loadUrl(mUrl)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            if (requestDrawOverLays()){
+                showFloatButton()
+            }
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -194,7 +213,7 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
     }
 
     override fun showUnCollectResponse() {
-        favorite = false
+        mFavorite = false
         mArticleDialog.setFavoriteState(false)
     }
 
@@ -203,8 +222,87 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
     }
 
     override fun showCollectArticleResponse() {
-        favorite = true
+        mFavorite = true
         mArticleDialog.setFavoriteState(true)
     }
 
+    private fun requestDrawOverLays(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            return true
+        }else {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+                startActivityForResult(intent,OVERLAY_PERMISSION_REQ_CODE)
+                return false
+            }
+            return true
+        }
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun showFloatButton(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        } else {
+            mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+        }
+        mFloatButton.text = "悬浮窗"
+
+        mFloatButton.setOnTouchListener(object : View.OnTouchListener{
+            var isMove = false
+            var lastX = 0.0
+            var lastY = 0.0
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when(event?.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        isMove = false
+                        lastX = event.rawX.toDouble()
+                        lastY = event.rawY.toDouble()
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        val x = event.rawX.toDouble()
+                        val y = event.rawY.toDouble()
+                        if (x != lastX || y != lastY){
+                            mLayoutParams.x = (x - 100).toInt()
+                            mLayoutParams.y = (y - 200).toInt()
+                            mWindowManager.updateViewLayout(mFloatButton, mLayoutParams)
+                            lastX = x
+                            lastY = y
+                            isMove = true
+                        }else {
+                            isMove = false
+                        }
+
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        if (!isMove){
+                            ARouter.getInstance().build(ARouterPath.pathArticleActivity)
+                                    .withString("url", mUrl)
+                                    .withString("title", mTitle)
+                                    .withInt("id", mArticleId)
+                                    .navigation()
+                            isMove = false
+                        }
+                    }
+                }
+                return true
+            }
+
+        })
+
+        mLayoutParams.format = PixelFormat.RGBA_8888   //窗口透明
+        mLayoutParams.gravity = Gravity.START or Gravity.TOP  //窗口位置
+        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        mLayoutParams.width = 200
+        mLayoutParams.height = 200
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        mLayoutParams.x = 0
+        mLayoutParams.y = size.y / 2
+        windowManager.addView(mFloatButton, mLayoutParams)
+    }
 }

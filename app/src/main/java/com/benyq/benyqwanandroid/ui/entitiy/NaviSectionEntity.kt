@@ -1,4 +1,4 @@
-package com.benyq.benyqwanandroid.ui.adapter
+package com.benyq.benyqwanandroid.ui.entitiy
 
 import com.benyq.benyqwanandroid.api.model.NavigationModel
 import com.benyq.benyqwanandroid.base.adapter.SectionEntity

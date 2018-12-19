@@ -10,6 +10,7 @@ import android.support.v4.view.PagerAdapter
  *@author benyq
  *@e-mail 1520063035@qq.com
  *@Date 2018/12/6
+ * 暂时可通用
  */
 class ProjectViewPagerAdapter(childFragmentManager: FragmentManager) : FragmentStatePagerAdapter(childFragmentManager) {
 

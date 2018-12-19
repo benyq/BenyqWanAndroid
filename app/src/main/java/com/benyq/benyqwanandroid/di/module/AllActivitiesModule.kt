@@ -37,4 +37,8 @@ abstract class AllActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [SearchActivityModule::class])
     abstract fun contributeSearchActivityInjector(): SearchActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [TodoListActivityModule::class])
+    abstract fun contributeTodoListActivityInjector(): TodoListActivity
 }

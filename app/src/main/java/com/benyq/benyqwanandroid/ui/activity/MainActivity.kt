@@ -1,9 +1,7 @@
 package com.benyq.benyqwanandroid.ui.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -14,11 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.benyq.benyqwanandroid.Preference
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.base.ARouterPath
 import com.benyq.benyqwanandroid.base.BaseActivity
-import com.benyq.benyqwanandroid.base.Constants
 import com.benyq.benyqwanandroid.local.CacheManager
 import com.benyq.benyqwanandroid.mvp.contract.MainActivityContract
 import com.benyq.benyqwanandroid.mvp.presenter.MainActivityPresenter
@@ -28,12 +24,11 @@ import com.benyq.benyqwanandroid.ui.fragment.ProjectFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dagger.android.AndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.head_toolbar.*
 import javax.inject.Inject
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 
 
 @Route(path = ARouterPath.pathMainActivity)
@@ -114,8 +109,20 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
                     ARouter.getInstance().build(ARouterPath.pathFavoriteArticleActivity).navigation()
                 }
 
+                R.id.action_WeChat_subscription -> {
+
+                }
+
+                R.id.action_todo -> {
+                    ARouter.getInstance().build(ARouterPath.pathTodoActivity).navigation()
+                }
+
                 R.id.action_Logout -> {
                     mPresenter.logout()
+                }
+
+                R.id.action_about -> {
+                    ARouter.getInstance().build(ARouterPath.pathAboutActivity).navigation()
                 }
             }
              true

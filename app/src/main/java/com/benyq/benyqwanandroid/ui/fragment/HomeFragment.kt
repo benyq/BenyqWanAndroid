@@ -88,7 +88,6 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
         rvArticle.run {
             layoutManager = LinearLayoutManager(activity)
             adapter = mAdapter
-            itemAnimator = DefaultItemAnimator()
             addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -101,7 +100,7 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
                         //距还剩5个时加载
                         if (!mLoading && (visibleItemCount + pastVisibleItems) >= totalItemCount - 5) {
                             mLoading = true
-                            loadMoreDate()
+                            loadMoreData()
                         }
                     }
                 }
@@ -164,7 +163,7 @@ class HomeFragment: BaseFragment(), HomeFragmentContract.View {
         }
     }
 
-    fun loadMoreDate(){
+    fun loadMoreData(){
         mPresenter.getHomeArticles(mCurPage)
     }
 

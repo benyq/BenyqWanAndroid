@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="5dp"
+    android:layout_marginTop="20dp">
+
+    <TextView
+        android:id="@+id/tvTodoNiceDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color1296db"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        tools:text="2018-11-11"
+        />
+
+</android.support.v7.widget.CardView>

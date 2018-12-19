@@ -56,7 +56,7 @@ class ProjectFragment: BaseFragment(), ProjectFragmentContract.View {
         vpProject.adapter = projectViewPagerAdapter
         tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         tabLayout.setupWithViewPager(vpProject)
-        vpProject.currentItem = 0//在设置adapter之后生效
+        vpProject.currentItem = 1//在设置adapter之后生效
     }
 
     override fun showLoading() {

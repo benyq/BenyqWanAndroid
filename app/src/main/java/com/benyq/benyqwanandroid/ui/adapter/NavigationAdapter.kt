@@ -5,8 +5,7 @@ import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.NavigationModel
 import com.benyq.benyqwanandroid.base.adapter.BaseHolder
 import com.benyq.benyqwanandroid.base.adapter.BaseSectionAdapter
-import com.benyq.benyqwanandroid.base.adapter.SectionEntity
-import kotlinx.android.synthetic.main.item_head.view.*
+import com.benyq.benyqwanandroid.ui.entitiy.NaviSectionEntity
 
 /**
  *@author benyq

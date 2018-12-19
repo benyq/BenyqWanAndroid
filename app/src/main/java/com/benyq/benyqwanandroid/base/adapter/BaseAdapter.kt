@@ -70,11 +70,25 @@ abstract class BaseAdapter<T>(private val mContext: Context, private val layoutI
         notifyItemInserted(mData.size - 1)
     }
 
+    fun addData(index: Int, data: T){
+        mData.add(index, data)
+        notifyItemInserted(index)
+    }
+
     fun clearData(){
         mData.clear()
         notifyDataSetChanged()
     }
 
+    fun removeData(index: Int){
+        val id = when {
+            index < 0 -> 0
+            index >= mData.size -> mData.size - 1
+            else -> index
+        }
+        mData.removeAt(id)
+        notifyItemRemoved(id)
+    }
 
     fun setOnItemClickListener(itemClickListener: OnItemClickListener){
         this.mOnItemClickListener = itemClickListener

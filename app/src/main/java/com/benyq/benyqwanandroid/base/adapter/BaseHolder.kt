@@ -1,6 +1,8 @@
 package com.benyq.benyqwanandroid.base.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -51,6 +53,18 @@ open class BaseHolder(private val mContext: Context, baseView: View): RecyclerVi
     fun setImageUrl(@IdRes viewId: Int, imgUrl: String): BaseHolder {
         val view: ImageView = getView(viewId)
         Glide.with(mContext).load(imgUrl).into(view)
+        return this
+    }
+
+    fun setImageRes(@IdRes viewId: Int, res: Drawable): BaseHolder {
+        val view: ImageView = getView(viewId)
+        view.setImageDrawable(res)
+        return this
+    }
+
+    fun setImageRes(@IdRes viewId: Int, @DrawableRes res: Int): BaseHolder {
+        val view: ImageView = getView(viewId)
+        view.setImageResource(res)
         return this
     }
 }

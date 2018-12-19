@@ -22,4 +22,7 @@ object Constants {
 
     const val SEARCH_HISTORY = "SEARCH_HISTORY"
 
+    const val EXTRA_DATE = "com.benyq.wanandroid.date"
+
+    const val ARG_DATE = "date"
 }

@@ -38,23 +38,4 @@ class MainActivityPresenter@Inject constructor(private val mRootView: MainActivi
                 })
     }
 
-    override fun addTodo(param: AddTodoParam) {
-        api.addTodo(param.content, param.title, param.date, param.type)
-                .compose(ResponseTransformer.rxSchedulerHelper())
-                .compose(ResponseTransformer.handleFinanceResult())
-                .doOnSubscribe {
-                    mRootView.showLoading()
-                }.doFinally {
-                    mRootView.dismissLoading()
-                }.subscribe(object : CommonSubscriber<String>(mRootView){
-                    override fun onSubscribe(d: Disposable) {
-                        addSubscribe(d)
-                    }
-
-                    override fun onNext(t: String) {
-
-                    }
-
-                })
-    }
 }

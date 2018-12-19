@@ -7,8 +7,24 @@
         android:title="@string/collection" />
 
     <item
+        android:id="@+id/action_WeChat_subscription"
+        android:icon="@drawable/ic_wechat_subscription"
+        android:title="@string/wechat_subscription" />
+
+    <item
+        android:id="@+id/action_todo"
+        android:icon="@drawable/ic_todo"
+        android:title="@string/to_do" />
+
+    <item
         android:id="@+id/action_Logout"
         android:icon="@drawable/ic_power_settings"
         android:title="@string/logout" />
+
+
+    <item
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_about"
+        android:title="@string/about" />
 
 </menu>
