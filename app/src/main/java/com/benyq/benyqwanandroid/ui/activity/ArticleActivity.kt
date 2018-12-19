@@ -95,6 +95,12 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
                     }
                     R.id.tvShare -> {
                         Toast.makeText(this@ArticleActivity, "tvShare", Toast.LENGTH_SHORT).show()
+                        Intent(Intent.ACTION_SEND).run {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, mUrl)
+                            putExtra(Intent.EXTRA_SUBJECT, mTitle)
+                            startActivity(this)
+                        }
                     }
                     R.id.tvBrowser -> {
                         val uri = Uri.parse(mUrl)

@@ -85,10 +85,10 @@ class TodoListActivity : BaseActivity() , TodoListActivityContract.View{
 
     override fun layoutId() = R.layout.activity_todo
 
-    override fun showTodoList(todoModel: TodoModel) {
-        if (mStatus == TODO){
+    override fun showTodoList(todoModel: TodoModel, status: Int) {
+        if (status == TODO){
             mTodoFragment.showTodoList(todoModel)
-        }else if (mStatus == TODO_DONE){
+        }else if (status == TODO_DONE){
             mTodoDoneFragment.showTodoList(todoModel)
         }
     }

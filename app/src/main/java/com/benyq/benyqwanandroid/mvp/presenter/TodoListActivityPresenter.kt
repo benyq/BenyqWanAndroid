@@ -90,7 +90,7 @@ class TodoListActivityPresenter@Inject constructor(private val mRootView: TodoLi
                     mRootView.dismissLoading()
                 }.subscribe(object : CommonSubscriber<TodoModel>(mRootView){
                     override fun onNext(t: TodoModel) {
-                        mRootView.showTodoList(t)
+                        mRootView.showTodoList(t, status)
                     }
 
                     override fun onSubscribe(d: Disposable) {

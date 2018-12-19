@@ -13,7 +13,7 @@ import com.benyq.benyqwanandroid.mvp.IBaseView
 interface TodoListActivityContract {
 
     interface View: IBaseView{
-        fun showTodoList(todoModel: TodoModel)
+        fun showTodoList(todoModel: TodoModel, status: Int)
 
         fun showDelete(id: Int)
 
