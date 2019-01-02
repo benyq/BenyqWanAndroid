@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.webkit.*
 import android.widget.Button
@@ -294,7 +293,7 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
                         }
                     }
                 }
-                return true
+                return false
             }
 
         })
@@ -310,5 +309,9 @@ class ArticleActivity : BaseActivity(), ArticleActivityContract.View{
         mLayoutParams.x = 0
         mLayoutParams.y = size.y / 2
         windowManager.addView(mFloatButton, mLayoutParams)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        return super.dispatchTouchEvent(ev)
     }
 }

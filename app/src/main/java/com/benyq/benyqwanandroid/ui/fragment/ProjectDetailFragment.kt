@@ -1,15 +1,14 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ProjectModel
 import com.benyq.benyqwanandroid.base.ARouterPath
-import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
 import com.benyq.benyqwanandroid.base.BaseFragment
 import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
 import com.benyq.benyqwanandroid.mvp.contract.ProjectDetailFragmentContract

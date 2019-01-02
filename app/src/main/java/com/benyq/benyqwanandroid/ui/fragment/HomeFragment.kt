@@ -1,18 +1,16 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
 import android.content.Context
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ArticleModel
 import com.benyq.benyqwanandroid.api.model.BannerModel
 import com.benyq.benyqwanandroid.base.ARouterPath
-import com.benyq.benyqwanandroid.base.adapter.BaseAdapter
 import com.benyq.benyqwanandroid.base.BaseFragment
 import com.benyq.benyqwanandroid.base.adapter.OnItemChildClickListener
 import com.benyq.benyqwanandroid.base.adapter.OnItemClickListener
@@ -20,11 +18,11 @@ import com.benyq.benyqwanandroid.mvp.contract.HomeFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.HomeFragmentPresenter
 import com.benyq.benyqwanandroid.ui.adapter.HomeArticleAdapter
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import com.youth.banner.loader.ImageLoader
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 /**

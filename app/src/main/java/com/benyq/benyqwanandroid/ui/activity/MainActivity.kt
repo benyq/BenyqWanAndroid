@@ -1,7 +1,7 @@
 package com.benyq.benyqwanandroid.ui.activity
 
+
 import android.content.Intent
-import android.support.v4.app.Fragment
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.benyq.benyqwanandroid.R
@@ -27,6 +29,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.head_toolbar.*
 import javax.inject.Inject
 
@@ -166,7 +169,7 @@ class MainActivity : BaseActivity(), MainActivityContract.View, HasSupportFragme
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             android.R.id.home -> {
-                drawerLayout.openDrawer(Gravity.START)
+                drawerLayout.openDrawer(GravityCompat.START)
                 //mPresenter.addTodo(AddTodoParam("新增标题", "新增内容", "2018-11-22", 0))
             }
             R.id.search -> {

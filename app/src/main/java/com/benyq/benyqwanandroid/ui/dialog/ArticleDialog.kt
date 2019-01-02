@@ -1,9 +1,8 @@
 package com.benyq.benyqwanandroid.ui.dialog
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.util.Log
 import android.view.*
+import androidx.fragment.app.DialogFragment
 import com.benyq.benyqwanandroid.R
 import kotlinx.android.synthetic.main.dialog_article.*
 

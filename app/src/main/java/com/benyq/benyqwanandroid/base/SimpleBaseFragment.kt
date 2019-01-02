@@ -2,12 +2,11 @@ package com.benyq.benyqwanandroid.base
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.AndroidSupportInjection
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 
 /**
  *@author benyq
@@ -28,11 +27,10 @@ abstract class SimpleBaseFragment: Fragment() {
 
     lateinit var mContext: Context
 
-    override fun onAttach(context: Context?) {
-        mContext = context!!
+    override fun onAttach(context: Context) {
+        mContext = context
         super.onAttach(context)
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), container, false)

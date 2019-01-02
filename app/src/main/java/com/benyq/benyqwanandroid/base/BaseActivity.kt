@@ -2,19 +2,14 @@ package com.benyq.benyqwanandroid.base
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.benyq.benyqwanandroid.R
-import com.benyq.benyqwanandroid.mvp.IBasePresenter
-import com.benyq.benyqwanandroid.mvp.IBaseView
-import com.benyq.benyqwanandroid.mvp.RxPresenter
 import dagger.android.AndroidInjection
-import javax.inject.Inject
 
 /**
  *@author benyq
@@ -72,10 +67,7 @@ abstract class BaseActivity: AppCompatActivity() {
             }
             return super.dispatchTouchEvent(ev)
         }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        return if (window.superDispatchTouchEvent(ev)) {
-            true
-        } else onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 
     private fun isShouldHideInput(v: View?, event: MotionEvent): Boolean {

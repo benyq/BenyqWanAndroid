@@ -1,15 +1,13 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
 import android.text.Html
-import android.util.Log
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.ProjectCategoryModel
 import com.benyq.benyqwanandroid.base.BaseFragment
 import com.benyq.benyqwanandroid.mvp.contract.ProjectFragmentContract
 import com.benyq.benyqwanandroid.mvp.presenter.ProjectFragmentPresenter
 import com.benyq.benyqwanandroid.ui.adapter.ProjectViewPagerAdapter
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_project.*
 import javax.inject.Inject
 

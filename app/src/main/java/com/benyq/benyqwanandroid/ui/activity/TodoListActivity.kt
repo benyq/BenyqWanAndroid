@@ -1,7 +1,7 @@
 package com.benyq.benyqwanandroid.ui.activity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.core.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.TodoModel
@@ -14,8 +14,6 @@ import com.benyq.benyqwanandroid.ui.adapter.ProjectViewPagerAdapter
 import com.benyq.benyqwanandroid.ui.entitiy.event.TodoEvent
 import com.benyq.benyqwanandroid.ui.fragment.TodoListFragment
 import com.benyq.benyqwanandroid.ui.fragment.TodoModifyFragment
-import kotlinx.android.synthetic.main.activity_todo.*
-import kotlinx.android.synthetic.main.common_head.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

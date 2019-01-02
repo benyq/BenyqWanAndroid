@@ -1,9 +1,9 @@
 package com.benyq.benyqwanandroid.ui.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.TodoModel
 import com.benyq.benyqwanandroid.base.SimpleBaseFragment
@@ -13,7 +13,6 @@ import com.benyq.benyqwanandroid.ui.activity.TodoListActivity
 import com.benyq.benyqwanandroid.ui.adapter.TodoAdapter
 import com.benyq.benyqwanandroid.ui.entitiy.TodoSectionEntity
 import kotlinx.android.synthetic.main.fragment_todo.*
-import org.greenrobot.eventbus.EventBus
 
 /**
  *@author benyq

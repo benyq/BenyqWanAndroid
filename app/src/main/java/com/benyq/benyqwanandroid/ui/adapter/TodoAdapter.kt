@@ -1,7 +1,6 @@
 package com.benyq.benyqwanandroid.ui.adapter
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import com.benyq.benyqwanandroid.R
 import com.benyq.benyqwanandroid.api.model.TodoModel
 import com.benyq.benyqwanandroid.base.adapter.BaseHolder
